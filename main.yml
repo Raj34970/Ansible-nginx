@@ -1,0 +1,8 @@
+---
+- name: Installing SYS Ops Apps
+  hosts: proxy
+  gather_facts: yes
+  vars_files:
+    - vars/main.yml
+  roles:
+    - nginx

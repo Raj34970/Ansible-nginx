@@ -1,0 +1,59 @@
+---
+- name: Installing and configuring NGINX
+  tags:
+    - never 
+    - install
+  block:
+    - name: Install required packages
+      ansible.builtin.apt:
+        name:
+          - nginx
+          - certbot
+          - python3-certbot-nginx
+          - ufw
+        state: present
+        update_cache: yes
+
+    - name: Create Nginx configuration for each subdomain
+      ansible.builtin.template:
+        src: nginx_vhost.conf.j2
+        dest: "/etc/nginx/sites-available/{{ item.subdomain }}"
+      loop: "{{ proxy_domains }}"
+      notify: Restart Nginx
+
+    - name: Enable Nginx configuration
+      ansible.builtin.file:
+        src: "/etc/nginx/sites-available/{{ item.subdomain }}"
+        dest: "/etc/nginx/sites-enabled/{{ item.subdomain }}"
+        state: link
+      loop: "{{ proxy_domains }}"
+      notify: Restart Nginx
+
+    - name: Remove default Nginx site
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: Restart Nginx
+
+    - name: Allow HTTP and HTTPS traffic (UFW)
+      community.general.ufw:
+        rule: allow
+        port: "{{ item }}"
+        proto: tcp
+      loop:
+        - "80"
+        - "443"
+
+    - name: Obtain SSL certificates for all subdomains
+      ansible.builtin.command: certbot --nginx -d {{ item.subdomain }} --non-interactive --agree-tos -m {{ email }} --redirect
+      args:
+        creates: "/etc/letsencrypt/live/{{ item.subdomain }}/fullchain.pem"
+      loop: "{{ proxy_domains }}"
+      notify: Restart Nginx
+
+    - name: Set up automatic SSL renewal
+      ansible.builtin.cron:
+        name: "Renew Let's Encrypt certificates"
+        job: "certbot renew --quiet"
+        minute: "0"
+        hour: "3"
