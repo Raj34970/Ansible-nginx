@@ -1,7 +1,8 @@
+# code:language=ansible
 ---
 - name: Installing and configuring NGINX
   tags:
-    - never 
+    - never
     - install
   block:
     - name: Install required packages
@@ -12,12 +13,13 @@
           - python3-certbot-nginx
           - ufw
         state: present
-        update_cache: yes
+        update_cache: true
 
     - name: Create Nginx configuration for each subdomain
       ansible.builtin.template:
         src: nginx_vhost.conf.j2
         dest: "/etc/nginx/sites-available/{{ item.subdomain }}"
+        mode: '0644'
       loop: "{{ proxy_domains }}"
       notify: Restart Nginx
 

@@ -1,7 +1,7 @@
 ---
 - name: Installing SYS Ops Apps
   hosts: proxy
-  gather_facts: yes
+  gather_facts: true
   vars_files:
     - vars/main.yml
   roles:
