@@ -1,9 +1,9 @@
 server {
     listen 80;
     server_name {{ item.subdomain }};
-
+    
     location / {
-        proxy_pass http://{{ item.backend_ip }}:{{ item.backend_port }};
+        proxy_pass {{ item.protocol }}://{{ item.backend_ip }}:{{ item.backend_port }};
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

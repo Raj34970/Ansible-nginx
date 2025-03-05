@@ -1,42 +1,52 @@
----
 # vars file for nginx
+---
 proxy_domains:
+  # - subdomain: proxy.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.1.210
+  #   backend_port: 80
+
   - subdomain: grafana.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.7
     backend_port: 3000
 
-  - subdomain: guacamole.lxhome.fr
-    backend_ip: 192.168.60.7
-    backend_port: 8443
+  # - subdomain: guacamole.lxhome.fr
+  #   protocol:
+  #   backend_ip: 192.168.60.7
+  #   backend_port: 8443
   
   - subdomain: jenkins.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.3
     backend_port: 8080
   
   - subdomain: librenms.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.13
     backend_port: 80
   
   - subdomain: mailhog.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.7
     backend_port: 8025
   
   - subdomain: mazapi.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.10
     backend_port: 80
 
   - subdomain: nextcloud.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.7
     backend_port: 8080
   
-  - subdomain: proxy.lxhome.fr
-    backend_ip: 192.168.60.7
-    backend_port: 80
-  
   - subdomain: portainer.lxhome.fr
+    protocol: https
     backend_ip: 192.168.60.7
     backend_port: 9443
   
   - subdomain: vaultwarden.lxhome.fr
+    protocol: http
     backend_ip: 192.168.60.7
     backend_port: 84
