@@ -15,10 +15,11 @@
         state: present
         update_cache: true
 
-    - name: Removeing the old certificates
+    - name: Making requried folders if doesn't exist
       ansible.builtin.file:
         path: "{{ item }}"
-        state: absent
+        state: directory
+        mode: '0644'
       loop:
         - "{{ nginx_sites_enabled }}"
         - "{{ nginx_sites_available }}"
