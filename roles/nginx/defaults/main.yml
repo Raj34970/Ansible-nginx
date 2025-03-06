@@ -1,3 +1,6 @@
 ---
 # defaults file for nginx
-email: admin@lxhome.fr
+nginx_email: admin@lxhome.fr
+nginx_sites_enabled: /etc/nginx/sites-enabled/
+nginx_sites_available: /etc/nginx/sites-available/
+nginx_letsencrypt: /etc/letsencrypt/live/

@@ -15,24 +15,28 @@
         state: present
         update_cache: true
 
+    - name: Removeing the old certificates
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ nginx_sites_enabled }}"
+        - "{{ nginx_sites_available }}"
+        - "{{ nginx_letsencrypt }}"
+
     - name: Create Nginx configuration for each subdomain
       ansible.builtin.template:
         src: nginx_vhost.conf.j2
-        dest: "/etc/nginx/sites-available/{{ item.subdomain }}"
+        dest: "{{ nginx_sites_available }}/{{ item.subdomain }}"
         mode: '0644'
       loop: "{{ proxy_domains }}"
 
     - name: Enable Nginx configuration
       ansible.builtin.file:
-        src: "/etc/nginx/sites-available/{{ item.subdomain }}"
-        dest: "/etc/nginx/sites-enabled/{{ item.subdomain }}"
+        src: "{{ nginx_sites_available }}/{{ item.subdomain }}"
+        dest: "{{ nginx_sites_enabled }}/{{ item.subdomain }}"
         state: link
       loop: "{{ proxy_domains }}"
-
-    - name: Remove default Nginx site
-      ansible.builtin.file:
-        path: /etc/nginx/sites-enabled/default
-        state: absent
 
     - name: Allow HTTP and HTTPS and SSH traffic (UFW)
       community.general.ufw:
@@ -45,9 +49,9 @@
         - "22"
 
     - name: Obtain SSL certificates for all subdomains
-      ansible.builtin.command: certbot --nginx -d {{ item.subdomain }} --non-interactive --agree-tos -m {{ email }} --redirect
+      ansible.builtin.command: certbot --nginx -d {{ item.subdomain }} --non-interactive --agree-tos -m {{ nginx_email }} --redirect
       args:
-        creates: "/etc/letsencrypt/live/{{ item.subdomain }}/fullchain.pem"
+        creates: "{{ nginx_letsencrypt }}/{{ item.subdomain }}/fullchain.pem"
       loop: "{{ proxy_domains }}"
       notify: Restart Nginx
 
@@ -57,3 +61,4 @@
         job: "certbot renew --quiet"
         minute: "0"
         hour: "3"
+        month: "1,4,7,10"
