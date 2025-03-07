@@ -1,5 +1,11 @@
 # code:language=ansible
 ---
+- name: Including tasks to remove all the files
+  ansible.builtin.include_tasks: remove_files.yml
+  tags:
+    - never
+    - purge
+
 - name: Including tasks for the NGINX install
   ansible.builtin.include_tasks: setup_nginx.yml
   tags:

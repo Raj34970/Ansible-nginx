@@ -1,0 +1,13 @@
+# code:language=ansible
+---
+- name: Removing all the files
+  tags:
+    - never
+    - purge
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ nginx_sites_enabled }}"
+    - "{{ nginx_sites_available }}"
+    - "{{ nginx_letsencrypt }}"
