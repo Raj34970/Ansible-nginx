@@ -25,7 +25,7 @@
         - "{{ nginx_sites_available }}"
         - "{{ nginx_letsencrypt }}"
 
-    - name: Create Nginx configuration for each subdomain
+    - name: Templating Nginx configuration for each subdomain
       ansible.builtin.template:
         src: nginx_vhost.conf.j2
         dest: "{{ nginx_sites_available }}/{{ item.subdomain }}"
@@ -50,7 +50,11 @@
         - "22"
 
     - name: Obtain SSL certificates for all subdomains
-      ansible.builtin.command: certbot --nginx -d {{ item.subdomain }} --non-interactive --agree-tos -m {{ nginx_email }} --redirect
+      ansible.builtin.command: certbot \
+        --nginx -d {{ item.subdomain }} \
+        --non-interactive \
+        --agree-tos -m {{ nginx_email }} \
+        --redirect --cert-name {{ item.subdomain }}
       args:
         creates: "{{ nginx_letsencrypt }}/{{ item.subdomain }}/fullchain.pem"
       loop: "{{ proxy_domains }}"

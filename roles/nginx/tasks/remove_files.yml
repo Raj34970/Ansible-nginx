@@ -3,7 +3,7 @@
 - name: Removing all the files
   tags:
     - never
-    - purge
+    - purge_all
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
@@ -11,3 +11,17 @@
     - "{{ nginx_sites_enabled }}"
     - "{{ nginx_sites_available }}"
     - "{{ nginx_letsencrypt }}"
+
+- name: Removing the selected files
+  tags:
+    - never
+    - purge
+  ansible.builtin.file:
+    path: "{{ item.0 }}/{{ item.1.subdomain }}"
+    state: absent
+  loop: "{{ query('ansible.builtin.cartesian', nginx_paths, proxy_domains) }}"
+  vars:
+    nginx_paths:
+      - "{{ nginx_sites_enabled }}"
+      - "{{ nginx_sites_available }}"
+      - "{{ nginx_letsencrypt }}"
