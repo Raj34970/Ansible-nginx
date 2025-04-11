@@ -6,47 +6,52 @@ proxy_domains:
   #   backend_ip: 192.168.60.17
   #   backend_port: 80
 
-  - subdomain: router.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.8.1
-    backend_port: 80
+  # - subdomain: router.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.8.1
+  #   backend_port: 80
 
-  - subdomain: grafana.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.60.7
-    backend_port: 3000
+  # - subdomain: grafana.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.7
+  #   backend_port: 3000
 
-  - subdomain: jenkins.lxhome.fr
+  # - subdomain: jenkins.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.3
+  #   backend_port: 8080
+  
+  # - subdomain: librenms.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.13
+  #   backend_port: 80
+  
+  # - subdomain: mazapi.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.10
+  #   backend_port: 80
+
+  # - subdomain: nextcloud.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.7
+  #   backend_port: 8080
+
+  # - subdomain: portainer.lxhome.fr
+  #   protocol: https
+  #   backend_ip: 192.168.60.7
+  #   backend_port: 9443
+  
+  # - subdomain: vaultwarden.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.7
+  #   backend_port: 84
+
+  # - subdomain: elk.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.60.12
+  #   backend_port: 84
+
+  - subdomain: nextcloud.int.lxhome.fr
     protocol: http
-    backend_ip: 192.168.60.3
+    backend_ip: 192.168.8.172
     backend_port: 8080
-  
-  - subdomain: librenms.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.60.13
-    backend_port: 80
-  
-  - subdomain: mazapi.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.60.10
-    backend_port: 80
-
-  - subdomain: nextcloud.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.60.7
-    backend_port: 8080
-
-  - subdomain: portainer.lxhome.fr
-    protocol: https
-    backend_ip: 192.168.60.7
-    backend_port: 9443
-  
-  - subdomain: vaultwarden.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.60.7
-    backend_port: 84
-
-  - subdomain: elk.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.60.12
-    backend_port: 84
