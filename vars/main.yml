@@ -18,7 +18,7 @@ proxy_domains:
 
   # - subdomain: jenkins.lxhome.fr
   #   protocol: http
-  #   backend_ip: 192.168.60.3
+  #   backend_ip: 192.168.8.128
   #   backend_port: 8080
   
   # - subdomain: librenms.lxhome.fr
@@ -33,12 +33,12 @@ proxy_domains:
 
   # - subdomain: nextcloud.lxhome.fr
   #   protocol: http
-  #   backend_ip: 192.168.60.7
+  #   backend_ip: 192.168.8.184
   #   backend_port: 8080
 
   # - subdomain: portainer.lxhome.fr
   #   protocol: https
-  #   backend_ip: 192.168.60.7
+  #   backend_ip: 192.168.8.184
   #   backend_port: 9443
   
   # - subdomain: vaultwarden.lxhome.fr
@@ -51,7 +51,17 @@ proxy_domains:
   #   backend_ip: 192.168.60.12
   #   backend_port: 84
 
-  - subdomain: nextcloud.int.lxhome.fr
-    protocol: http
-    backend_ip: 192.168.8.172
-    backend_port: 8080
+  # - subdomain: keycloak.lxhome.fr
+  #   protocol: http
+  #   backend_ip: 192.168.8.191
+  #   backend_port: 8088
+
+  # - subdomain: mail.lxhome.fr
+  #   protocol: https
+  #   backend_ip: 192.168.8.152
+  #   backend_port: 443
+
+  - subdomain: proxmox.lxhome.fr
+    protocol: https
+    backend_ip: proxmox.lxhome.local
+    backend_port: 8006
